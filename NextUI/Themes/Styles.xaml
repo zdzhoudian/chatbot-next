@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/NextUI;component/Styles/Icons.xaml"/>
+        <ResourceDictionary Source="/NextUI;component/Styles/WindowStyle.xaml"/>
+        <ResourceDictionary Source="/NextUI;component/Styles/ButtonStyle.xaml"/>
+        <ResourceDictionary Source="/NextUI;component/Styles/TextBoxStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>

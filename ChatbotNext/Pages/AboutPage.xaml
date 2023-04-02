@@ -1,0 +1,66 @@
+﻿<Page x:Class="ChatbotNext.Pages.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ChatbotNext.Pages"
+      xmlns:chatbotNext="clr-namespace:ChatbotNext"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" d:Background="#FFFFFF"
+      Title="AboutPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{DynamicResource Menu_About_Tip}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ScrollViewer Grid.Row="1">
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,8" TextBlock.FontSize="{DynamicResource NUI.Font.Size.H6}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="版本：" Height="auto" Padding="0" VerticalAlignment="Center"/>
+                        <TextBox BorderThickness="0" IsReadOnly="True" Text="{Binding Source={x:Static chatbotNext:App.Vm}, Path=VersionString, Mode=OneTime}" Height="auto" Padding="0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="邮箱：" Height="auto" Padding="0" VerticalAlignment="Center"/>
+                        <TextBlock>
+                    <Hyperlink TextDecorations="None" Focusable="False" NavigateUri="mailto:zd_zhoudian@outlook.com">zd_zhoudian@outlook.com</Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <Border Grid.Row="0" BorderBrush="{DynamicResource NUI.Brush.Border.L1}" BorderThickness="{DynamicResource NUI.Border.Thickness.Bottom}"/>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="你要请我喝咖啡吗" FontSize="{DynamicResource NUI.Font.Size.H1}"/>
+                    <Border Grid.Row="1"
+                            BorderBrush="{DynamicResource NUI.Brush.Border.L4}"
+                            BorderThickness="4,0,0,0" Padding="4">
+                        <TextBlock FontSize="{DynamicResource NUI.Font.Size}"
+                                   Foreground="{DynamicResource NUI.Brush.Foreground.Secondary}"
+                                   TextWrapping="Wrap"
+                                   Text="无论你是否请我喝咖啡，你都可以获取此软件的完全使用权（此软件提供的免费ChatGPT接口服务并不保证稳定，随时可能关闭。）。"/>
+                    </Border>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Height="400">
+                        <Image Margin="8" Source="/ChatbotNext;component/Resources/wx.jpg"/>
+                        <Image Margin="8" Source="/ChatbotNext;component/Resources/zfb.jpg"/>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="1" BorderBrush="{DynamicResource NUI.Brush.Border.L1}" BorderThickness="{DynamicResource NUI.Border.Thickness.Bottom}"/>
+                <StackPanel Orientation="Vertical" Grid.Row="2">
+                    <TextBlock Text="免责声明" FontSize="{DynamicResource NUI.Font.Size.H1}"/>
+                    <TextBox x:Name="disclaimerTextBox" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

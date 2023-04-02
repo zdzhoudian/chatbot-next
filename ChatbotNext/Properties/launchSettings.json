@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "ChatbotNext.Development": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "APP_ENVIRONMENT": "Development"
+      }
+    },
+    "ChatbotNext.Production": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "APP_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}

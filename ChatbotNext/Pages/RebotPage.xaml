@@ -1,0 +1,290 @@
+﻿<Page x:Class="ChatbotNext.Pages.RebotPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ChatbotNext.Pages"
+      xmlns:vms="clr-namespace:ChatbotNext.ViewModels"
+      xmlns:ui="clr-namespace:NextUI;assembly=NextUI"
+      xmlns:sys="clr-namespace:System;assembly=netstandard"
+      xmlns:cvs="clr-namespace:NextUI.Converters;assembly=NextUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" d:Background="#FFFFFF"
+      Title="RebotPage">
+
+    <Page.DataContext>
+        <vms:RebotPageVm/>
+    </Page.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="{DynamicResource NUI.Brush.Background.Secondary}"
+                BorderThickness="{DynamicResource NUI.Border.Thickness.Right}"
+                BorderBrush="{DynamicResource NUI.Brush.Border.L1}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="{DynamicResource NUI.Border.Thickness.Bottom}"
+                        BorderBrush="{DynamicResource NUI.Brush.Border.L1}">
+                    <TextBox x:Name="searchTextBox" Style="{DynamicResource NUI.TextBox.PrimaryStyle}"
+                             ui:NUI.IsHitTestVisibleInCaption="True" Margin="8"
+                             ui:NUI.WaterMark="{DynamicResource Label_Search}"
+                             Background="Transparent" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                        <ui:NUI.SuffixContent>
+                            <Button x:Name="searchBtn" Style="{DynamicResource NUI.Button.LightStyle.Small}"
+                                    Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
+                                    BorderThickness="0" Focusable="False">
+                                <Viewbox>
+                                    <Path Fill="{Binding ElementName=searchTextBox, Path=BorderBrush}" Data="{DynamicResource NUI.Icon.Search}"/>
+                                </Viewbox>
+                            </Button>
+                        </ui:NUI.SuffixContent>
+                    </TextBox>
+                </Border>
+                <Border Grid.Row="1"
+                        BorderThickness="{DynamicResource NUI.Border.Thickness.Bottom}"
+                        BorderBrush="{DynamicResource NUI.Brush.Border.L1}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{DynamicResource NUI.Button.LightStyle}" Width="24" Height="24" Margin="2" Padding="4" FocusVisualStyle="{x:Null}"
+                                Command="{Binding AddNewBotCommand}">
+                            <Viewbox>
+                                <Path Fill="{DynamicResource NUI.Brush.Foreground.Secondary}" Data="{DynamicResource NUI.Icon.Add}"/>
+                            </Viewbox>
+                        </Button>
+                        <Button Style="{DynamicResource NUI.Button.LightStyle}" Width="24" Height="24" Margin="2" Padding="4" FocusVisualStyle="{x:Null}"
+                                Command="{Binding EditBotCommand}">
+                            <Viewbox>
+                                <Path Fill="{DynamicResource NUI.Brush.Foreground.Secondary}" Data="{DynamicResource NUI.Icon.Update}"/>
+                            </Viewbox>
+                        </Button>
+                        <Button Style="{DynamicResource NUI.Button.LightStyle}" Width="24" Height="24" Margin="2" Padding="4" FocusVisualStyle="{x:Null}"
+                                Command="{Binding DeleteBotCommand}">
+                            <Viewbox>
+                                <Path Fill="{DynamicResource NUI.Brush.Foreground.Secondary}" Data="{DynamicResource NUI.Icon.Delete}"/>
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+                </Border>
+                <ListBox Grid.Row="2" Padding="0" Focusable="False" BorderBrush="{x:Null}" BorderThickness="0"
+                         ItemsSource="{Binding ChatbotCollection}" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                         SelectedItem="{Binding SelectedChatbot}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="48" Width="188">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="chatbotItem" Margin="2"
+                                        BorderBrush="{DynamicResource NUI.Brush.Border.L1}"
+                                        Background="{DynamicResource NUI.Brush.Background.Mask}"
+                                        BorderThickness="{DynamicResource NUI.Border.Thickness}"
+                                        CornerRadius="{DynamicResource NUI.Border.CornerRadius.Circle}"
+                                        Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}">
+                                    <Border.OpacityMask>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Border Background="#FFFFFF"
+                                                        CornerRadius="{DynamicResource NUI.Border.CornerRadius.Circle}"
+                                                        Width="{Binding ElementName=chatbotItem, Path=ActualWidth}"
+                                                        Height="{Binding ElementName=chatbotItem, Path=ActualHeight}"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Border.OpacityMask>
+                                    <Image Stretch="UniformToFill" Margin="-2" Source="{Binding ChatbotData.Image, Converter={StaticResource Base64ToImageCv}}"/>
+                                </Border>
+                                <Grid Grid.Column="1" Margin="4,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.2*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                               Text="{Binding ChatbotData.Name}"/>
+                                    <TextBlock Grid.Row="1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                               FontSize="{DynamicResource NUI.Font.Size.Secondary}"
+                                               Text="{Binding ChatbotData.Description}" Foreground="{DynamicResource NUI.Brush.Foreground.Secondary}"/>
+                                </Grid>
+                                <!--<Border Grid.Column="1" Width="8" Height="8" Margin="0,4,4,0"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Background="{DynamicResource NUI.Brush.Danger}" CornerRadius="4"
+                                        Visibility="{Binding ChatControlDataContext.HasNewMessage, Converter={StaticResource TrueToVisibleCv}, Mode=OneWay}"/>-->
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="Padding" Value="4,1"/>
+                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Height" Value="auto"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Border x:Name="Bd"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}"
+                                                SnapsToDevicePixels="true">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.666"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="{DynamicResource NUI.Brush.Background.Active}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource NUI.Brush.Foreground}"/>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="{DynamicResource NUI.Brush.Background.Hover}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource NUI.Brush.Foreground}"/>
+                                </MultiTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="4"
+              Visibility="{Binding SelectedChatbot, Converter={StaticResource NullToCollapsedCv}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <TextBlock Text="{Binding SelectedChatbot.ChatbotData.Name}"/>
+                <TextBlock Text="{Binding SelectedChatbot.TypingState}" Foreground="{DynamicResource NUI.Brush.Foreground.Secondary}"/>
+            </StackPanel>
+
+            <Border Margin="0,0,0,4" Grid.Row="1"
+                    BorderBrush="{DynamicResource NUI.Brush.Border.L1}"
+                    BorderThickness="{DynamicResource NUI.Border.Thickness}"
+                    CornerRadius="{DynamicResource NUI.Border.CornerRadius}">
+                <Border.Resources>
+                    <cvs:EqualsValueConverter x:Key="MyMsgHorizontalAlignmentCv"
+                                  TargetValue="{x:Static ui:NUI.True}"
+                                  EqualValue="{x:Static HorizontalAlignment.Right}"
+                                  UnequalValue="{x:Static HorizontalAlignment.Left}"/>
+                    <cvs:EqualsValueConverter x:Key="MyImageColCv"
+                                  TargetValue="{x:Static ui:NUI.True}">
+                        <cvs:EqualsValueConverter.EqualValue>
+                            <sys:Int32>4</sys:Int32>
+                        </cvs:EqualsValueConverter.EqualValue>
+                        <cvs:EqualsValueConverter.UnequalValue>
+                            <sys:Int32>0</sys:Int32>
+                        </cvs:EqualsValueConverter.UnequalValue>
+                    </cvs:EqualsValueConverter>
+                </Border.Resources>
+                <ItemsControl Focusable="False" FocusVisualStyle="{x:Null}"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingStackPanel.ScrollUnit="Pixel"
+                          ScrollViewer.CanContentScroll="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ItemsSource="{Binding SelectedChatbot.Messages}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="48"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="msgImageBorder" Grid.Column="{Binding IsMe, Converter={StaticResource MyImageColCv}}"
+                                        Width="48" Height="48" Padding="4" VerticalAlignment="Top"
+                                        CornerRadius="{DynamicResource NUI.Border.CornerRadius.Circle}">
+                                    <Border.OpacityMask>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Border Background="#FFFFFF"
+                                                        CornerRadius="{DynamicResource NUI.Border.CornerRadius.Circle}"
+                                                        Width="{Binding ElementName=msgImageBorder, Path=ActualWidth}"
+                                                        Height="{Binding ElementName=msgImageBorder, Path=ActualHeight}"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Border.OpacityMask>
+                                    <Image Source="{Binding Image, Converter={StaticResource Base64ToImageCv}}" Stretch="UniformToFill" Margin="-2"/>
+                                </Border>
+                                <TextBox Grid.Column="2" BorderThickness="0" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,6"
+                                         MinHeight="32" IsReadOnly="True" Padding="8,6" MinWidth="12" Height="auto"
+                                         HorizontalAlignment="{Binding IsMe, Converter={StaticResource MyMsgHorizontalAlignmentCv}}"
+                                         Text="{Binding Content}"
+                                         Style="{DynamicResource NUI.TextBox.PrimaryStyle}"
+                                         Background="{DynamicResource NUI.Brush.Background.Hover}"
+                                         ui:NUI.CornerRadius="{DynamicResource NUI.Border.CornerRadius}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False"
+                                          ui:NUI.AutoScrollToEnd="True">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
+            </Border>
+
+            <Border Grid.Row="2" Margin="0,0,0,4"
+                    BorderThickness="{DynamicResource NUI.Border.Thickness}"
+                    BorderBrush="{DynamicResource NUI.Brush.Border.L1}"
+                    CornerRadius="{DynamicResource NUI.Border.CornerRadius}">
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{DynamicResource NUI.Button.LightStyle}" Width="24" Height="24" Margin="2" Padding="4" FocusVisualStyle="{x:Null}"
+                            BorderThickness="0" Command="{Binding ClearMessagesCommand}" ToolTip="{DynamicResource ToolTip_ClearMessages}">
+                        <Viewbox>
+                            <Path Fill="{DynamicResource NUI.Brush.Foreground.Secondary}" Data="{DynamicResource NUI.Icon.Delete}"/>
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <TextBox x:Name="sendTextBox" Grid.Row="3" Style="{DynamicResource NUI.TextBox.PrimaryStyle}" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                     Height="auto" MaxHeight="96" AcceptsReturn="True" Padding="4" VerticalContentAlignment="Center"
+                     Text="{Binding SendText, UpdateSourceTrigger=PropertyChanged}" KeyDown="sendTextBox_KeyDown">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SendCommand}"/>
+                </TextBox.InputBindings>
+                <ui:NUI.SuffixContent>
+                    <Button Style="{DynamicResource NUI.Button.LightStyle}" VerticalAlignment="Top" Content="发送" Margin="4"
+                            Command="{Binding SendCommand}"/>
+                </ui:NUI.SuffixContent>
+            </TextBox>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,20 @@
+﻿<Application x:Class="ChatbotNext.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ChatbotNext"
+             xmlns:cvs="clr-namespace:ChatbotNext.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/NextUI;component/Themes/Default.xaml"/>
+                <ResourceDictionary Source="/NextUI;component/Themes/Styles.xaml"/>
+                <ResourceDictionary Source="/NextUI;component/Themes/Converters.xaml"/>
+                <ResourceDictionary Source="/NextUI;component/Styles/ScrollStyle.xaml"/>
+                <ResourceDictionary Source="/ChatbotNext;component/Langs/zh-CN.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <cvs:Base64ToImageConverter x:Key="Base64ToImageCv"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

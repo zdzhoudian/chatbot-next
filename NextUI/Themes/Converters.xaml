@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:NextUI"
+                    xmlns:cv="clr-namespace:NextUI.Converters">
+    
+    <cv:EqualsValueConverter x:Key="MaxButtonVisibleCv" TargetValue="{x:Static WindowState.Maximized}" EqualValue="{x:Static Visibility.Visible}" UnequalValue="{x:Static Visibility.Collapsed}"/>
+    <cv:EqualsValueConverter x:Key="NormalButtonVisibleCv" TargetValue="{x:Static WindowState.Normal}" EqualValue="{x:Static Visibility.Visible}" UnequalValue="{x:Static Visibility.Collapsed}"/>
+    <cv:EqualsValueConverter x:Key="TrueToVisibleCv" TargetValue="{x:Static ui:NUI.True}" EqualValue="{x:Static Visibility.Visible}" UnequalValue="{x:Static Visibility.Collapsed}"/>
+    <cv:EqualsValueConverter x:Key="FalseToVisibleCv" TargetValue="{x:Static ui:NUI.False}" EqualValue="{x:Static Visibility.Visible}" UnequalValue="{x:Static Visibility.Collapsed}"/>
+    <cv:EqualsValueConverter x:Key="NullToCollapsedCv" TargetValue="{x:Null}" EqualValue="{x:Static Visibility.Collapsed}" UnequalValue="{x:Static Visibility.Visible}"/>
+    <cv:EnumToBoolConverter x:Key="EnumToBoolCv"/>
+
+</ResourceDictionary>
