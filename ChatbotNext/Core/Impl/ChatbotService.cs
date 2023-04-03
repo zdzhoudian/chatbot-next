@@ -85,7 +85,7 @@ namespace ChatbotNext.Core
             }
             else
             {
-                req.Messages.AddUserMessage(chatbotMessages.First().Content);
+                req.Messages.AddUserMessage(chatbotMessages.Last().Content);
             }
 
             var res = await _client.SendAsync(req);

@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ChatbotNext/Core/Impl/ChatbotService.cs
+/ChatbotNext/Models/FreeServiceConfig.cs
